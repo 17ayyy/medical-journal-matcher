@@ -1,0 +1,47 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "medical-journal-matcher"
+version = "0.1.0"
+description = "Evidence-backed journal matching for biomedical and life-science manuscripts."
+readme = "PRD.md"
+requires-python = ">=3.12"
+license = { text = "Proprietary" }
+authors = [{ name = "17_ayyy" }]
+dependencies = [
+  "httpx>=0.28,<1",
+  "jsonschema>=4.25,<5",
+  "pydantic>=2.11,<3",
+  "pydantic-settings>=2.10,<3",
+  "pypdf>=6,<7",
+  "python-docx>=1.2,<2",
+  "tenacity>=9,<10",
+  "typer>=0.19,<1",
+]
+
+[project.scripts]
+journal-matcher = "medical_journal_matcher.cli:app"
+
+[dependency-groups]
+dev = [
+  "pytest>=8.4,<9",
+  "pytest-cov>=6.2,<7",
+  "ruff>=0.13,<1",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/medical_journal_matcher"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+exclude = [".uv-cache", ".uv-python", ".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]

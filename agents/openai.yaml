@@ -1,0 +1,6 @@
+interface:
+  display_name: "Medical Journal Matcher"
+  short_description: "Evidence-backed biomedical journal selection"
+  default_prompt: "Use $medical-journal-matcher to build a source-backed journal shortlist for my biomedical manuscript."
+policy:
+  allow_implicit_invocation: true

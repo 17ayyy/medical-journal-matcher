@@ -1,0 +1,39 @@
+schema_version = "1.0.0"
+scoring_version = "0.1.0"
+evidence_window_years = 3
+
+[eligibility]
+minimum_match_score = 65.0
+minimum_score_coverage = 0.80
+minimum_confidence = "MEDIUM"
+minimum_recent_dois = 1
+maximum_recent_dois = 5
+
+[weights]
+scope_official = 15.0
+scope_controlled_topics = 10.0
+scope_temporal_coverage = 5.0
+design_multilabel = 8.0
+method_fit = 7.0
+contribution_fit = 5.0
+entity_overlap = 6.0
+setting_or_object_fit = 4.0
+similar_articles_top3 = 15.0
+similar_articles_best = 5.0
+similar_articles_density = 5.0
+audience_fit = 6.0
+positioning_fit = 4.0
+speed_first_decision = 1.2
+speed_acceptance = 0.9
+speed_online = 0.6
+publication_frequency = 0.3
+publisher_preference = 1.0
+apc_soft_budget = 1.0
+
+[confidence_weights]
+input_sufficiency = 0.15
+evidence_sufficiency = 0.25
+provenance_completeness = 0.25
+signal_agreement = 0.15
+stability = 0.10
+freshness = 0.10
