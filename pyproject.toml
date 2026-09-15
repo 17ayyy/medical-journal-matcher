@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "medical-journal-matcher"
 version = "0.1.0"
 description = "Evidence-backed journal matching for biomedical and life-science manuscripts."
-readme = "PRD.md"
+readme = "README.md"
 requires-python = ">=3.12"
 license = { text = "Proprietary" }
 authors = [{ name = "17_ayyy" }]
