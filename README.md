@@ -76,7 +76,16 @@ Copy-Item .env.example .env
 uv run pytest
 ```
 
-如需让 Codex 自动发现该 Skill，请将仓库放在 Codex Skills 目录下，并在新任务中调用 `$medical-journal-matcher`。
+Python 包能够运行不等于 Codex 已发现该 Skill。仓库根目录本身就是 Skill 目录；若保留当前克隆位置，可在 Windows 上把它链接到用户级 Skills 目录：
+
+```powershell
+New-Item -ItemType Directory -Force "$HOME\.agents\skills"
+New-Item -ItemType Junction `
+  -Path "$HOME\.agents\skills\medical-journal-matcher" `
+  -Target (Get-Location)
+```
+
+重新启动 Codex 后，在技能列表中确认 `medical-journal-matcher`，再于新任务中调用 `$medical-journal-matcher`。仅在本仓库根目录放置 `SKILL.md` 不会触发仓库级自动发现；仓库级 Skill 需要位于 `.agents/skills/<skill-name>/`，而上面的用户级链接无需复制代码。
 
 ### 配置
 
@@ -159,6 +168,8 @@ uv run journal-matcher validate-output result.json
 - 缺失数据感知的评分与置信度计算；
 - PDF/DOCX/TXT/Markdown 本地解析基础；
 - 输出 Schema、语义校验和首批离线测试；
+- PUBLIC 模式、候选分组、证据窗口、来源引用和固定免责声明的 fail-closed 校验；
+- CLI、TXT/Markdown/PDF/DOCX 解析与隐私输出测试；
 - 外部数据源适配器接口。
 
 OpenAlex、PubMed、Crossref、DOAJ、NLM Catalog、期刊官网和授权 JCR 的完整在线适配器，以及 PRD 中 A01–A18 的全部验收用例仍需继续实现。
@@ -257,7 +268,16 @@ Copy-Item .env.example .env
 uv run pytest
 ```
 
-To make the Skill discoverable by Codex, place the repository in your Codex Skills directory and invoke `$medical-journal-matcher` in a new task.
+The Python package running successfully does not mean Codex has discovered the Skill. The repository root is the Skill directory. To keep the checkout where it is on Windows, link it into the user Skills directory:
+
+```powershell
+New-Item -ItemType Directory -Force "$HOME\.agents\skills"
+New-Item -ItemType Junction `
+  -Path "$HOME\.agents\skills\medical-journal-matcher" `
+  -Target (Get-Location)
+```
+
+Restart Codex, confirm that `medical-journal-matcher` appears in the skills list, and then invoke `$medical-journal-matcher` in a new task. A root-level `SKILL.md` in an arbitrary checkout is not repository-local discovery; repository skills must live under `.agents/skills/<skill-name>/`. The user-level link above avoids duplicating the checkout.
 
 ### Configuration
 
@@ -340,6 +360,8 @@ The project is currently at the **MVP foundation stage**. The repository already
 - missing-data-aware score and confidence calculations;
 - foundational local PDF/DOCX/TXT/Markdown parsing;
 - output schema, semantic validation, and initial offline tests;
+- fail-closed checks for PUBLIC mode, candidate buckets, evidence windows, source references, and the fixed disclaimer;
+- CLI and privacy-preserving TXT/Markdown/PDF/DOCX parsing tests;
 - external data-source adapter interfaces.
 
 Full online adapters for OpenAlex, PubMed, Crossref, DOAJ, NLM Catalog, journal websites, and authorized JCR data—as well as the complete A01–A18 acceptance suite in the PRD—remain to be implemented.

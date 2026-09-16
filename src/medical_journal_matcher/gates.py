@@ -29,6 +29,8 @@ class GateResult:
 def classify_gates(gates: Iterable[GateResult]) -> CandidateDisposition:
     """Apply the PRD fail-closed hard-gate state machine."""
     enabled = [gate for gate in gates if gate.enabled]
+    if not enabled:
+        return CandidateDisposition.UNVERIFIED
     if any(gate.status is GateStatus.FAIL for gate in enabled):
         return CandidateDisposition.EXCLUDED
     if any(gate.status is GateStatus.UNVERIFIED for gate in enabled):

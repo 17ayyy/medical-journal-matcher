@@ -20,3 +20,11 @@ def test_fail_takes_precedence() -> None:
         GateResult("jcr", GateStatus.UNVERIFIED),
     ]
     assert classify_gates(gates) is CandidateDisposition.EXCLUDED
+
+
+def test_no_enabled_gates_fails_closed() -> None:
+    assert classify_gates([]) is CandidateDisposition.UNVERIFIED
+    assert (
+        classify_gates([GateResult("optional", GateStatus.PASS, enabled=False)])
+        is CandidateDisposition.UNVERIFIED
+    )
